@@ -13,6 +13,29 @@ windowed-VRR-enabled operation, such as desktop compositor (e.g. DWM). This can 
 to match the frame rate of the desktop compositor or foreground application (e.g. 60fps capped app on VRR display).
 This algorithm currently degrades severely during varying-framerate operation on a VRR display.
 
+# LICENSE - Apache-2.0
+
+```
+Copyright 2014-2023 by Jerry Jongerius of DuckWare (https://www.duckware.com) - original code and algorithm
+Copyright 2017-2023 by Mark Rejhon of Blur Busters / TestUFO (https://www.testufo.com) - refactoring and improvements
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at:
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+*** First publicly released July 2023 under mutual agreement
+*** between Rejhon Technologies Inc. (Blur Busters) and Jongerius LLC (DuckWare)
+*** PLEASE DO NOT DELETE THIS COPYRIGHT NOTICE
+```
+
 ## JAVASCRIPT VSYNC API / REFRESH CYCLE TIME STAMPS
 
 * Info: https://www.vsynctester.com/howtocomputevsync.html
