@@ -2,7 +2,7 @@
 
 ## PURPOSE: Accurate cross-platform display refresh rate estimator / dejittered VSYNC timestamp estimator.
 
-* **Input:** Series of frame timestamps during framerate=Hz (Jittery/lossy)
+* **Input:** Series of frame timestamps during framerate=Hz (Jittery/lossy) or from your platform's jittery VSYNC listener
 * **Output:** Accurate filtered and dejittered floating-point Hz estimate & refresh cycle timestamps.
 * **Algorithm:** Combination of frame counting, jitter filtering, ignoring missed frames, and averaging.
 
@@ -52,6 +52,7 @@ limitations under the License.
 * APIs for high level frame presentation include XBox/MonoGame Draw(), Unity3D Update(), etc.
 * APIs for zero-graphics timestamps (e.g. independent/separate thread) include Windows D3DKMTWaitForVerticalBlankEvent()
 * While not normally used for beam racing, this algorithm is sufficiently accurate enough for cross-platform raster estimates for beam racing applications, based on a time offset between refresh cycle timestamps! (~1% error vs vertical resolution is possible on modern AMD/NVIDIA GPUs).
+* Can be used for tearingless VSYNC OFF algorithms (scanline-specific tearline steering offscreen ala RTSS Scanline Sync or SpecialK Latent Sync) as long as separate thread is able to monitor and provide your (jittery) VSYNC or refresh cycle timestamps.  Or if your platform/framework supports simultaneous VSYNC ON (offscreen) and VSYNC OFF (visible) in separate threads/contexts.
 
 ## SIMPLE CODE EXAMPLE
 
