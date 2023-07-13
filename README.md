@@ -45,7 +45,7 @@ limitations under the License.
 
 ## CODE PORTING 
 
-* This algorithm is very portable to most high level and low level graphics frameworks, on most platforms.
+* This algorithm is very portable to most languages, on most platforms, via high level and low level graphics frameworks.
 * Generic VSYNC timestamps is usually immediately after exit of almost any frame presentation API during VSYNC ON framerate=Hz
 * APIs for timestamps include RTDSC / QueryPerformanceCounter() / std\:\:chrono\:\:high_resolution_clock\:\:now()
 * APIs for low level frame presentation include DirectX Present(), OpenGL glFinish(), Vulkan vkQueuePresentKHR()
