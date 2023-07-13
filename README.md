@@ -28,6 +28,7 @@ This algorithm currently degrades severely during varying-framerate operation on
 * APIs for low level frame presentation include DirectX Present(), OpenGL glFinish(), Vulkan vkQueuePresentKHR()
 * APIs for high level frame presentation include XBox/MonoGame Draw(), Unity3D Update(), etc.
 * APIs for zero-graphics timestamps (e.g. independent/separate thread) include Windows D3DKMTWaitForVerticalBlankEvent()
+* While not normally used for beam racing, tis algorithm is sufficiently accurate enough for cross-platform raster estimates for beam racing applications (~1% error vs vertical resolution is possible on modern AMD/NVIDIA GPUs).
 
 ## SIMPLE CODE EXAMPLE
 
