@@ -62,18 +62,19 @@
 
 class RefreshRateCalculator
 {
+  // CONSTANTS: tune these for the expected environment (eg: optimize when converting this code to native code)
+  VALIDATEMS = 100.0;    // tune: ms: how frequently timebase/interval is computed/validated
+  TIGHTGROUPMS = 1.0;    // tune: ms: the far majority of inter-frame times expected to be within this grouping (a 'tight group' frame; discard outside this range)
+  MSCHANGE = 1.0;        // tune: ms: an interval change more than this ms is considered a change in Hz
+  MAXSTORE = 60000;      // tune: int: store a maximum of this many 'tight group' frame times
+  LOWESTVALIDHZ = 22;    // tune: int: lowest valid Hz -- filters out timings while web browser tab is inactive. Supports 24Hz movie modes.
+
   constructor()
   {
-    // CONSTANTS: tune these for the expected environment (eg: optimize when converting this code to native code)
-    this._VALIDATEMS = 100.0;    // tune: ms: how frequently timebase/interval is computed/validated
-    this._TIGHTGROUPMS = 1.0;    // tune: ms: the far majority of inter-frame times expected to be within this grouping (a 'tight group' frame; discard outside this range)
-    this._MSCHANGE = 1.0;        // tune: ms: an interval change more than this ms is considered a change in Hz
-    this._MAXSTORE = 5000000;    // tune: int: store a maximum of this many 'tight group' frame times
-    this._LOWESTVALIDHZ = 35;    // tune: int: lowest valid Hz -- filters out timings while web browser tab is inactive
-    this._nJavaScriptSkip = 60;  // tune: int: ignore this many initial times -- ONE time at startup (allow JavaScript to settle down; not needed in native code)
+    this._javaScriptSkip = 60;  // tune: int: ignore this many initial times -- ONE time at startup (allow JavaScript to settle down; not needed in native code)
     this.__reset();
   }
-
+ 
   // Clears history and restarts measuring. 
   //   Useful to call this if refresh rate has changed (e.g. display mode changes).
   restartMeasuring()
@@ -88,6 +89,7 @@ class RefreshRateCalculator
   //   For other platforms, call with microsecond-accurate timestamps every time your frame presentation API runs/exits.
   countCycle(currentTime)
   {
+    if (!currentTime) currentTime = performance.now();
     this.__add(currentTime);
   };
 
@@ -99,15 +101,27 @@ class RefreshRateCalculator
     this._nSkip = cycles;
   };
 
+  // Gets minimum valid Hz this class will accept 
+  getMinimumFrequency(hz)
+  {
+    return this.LOWESTVALIDHZ;
+  }
+
+  // Sets minimum valid Hz (in case user wants to benchmark ultra-low refresh rates)
+  setMinimumFrequency(hz)
+  {
+    this.LOWESTVALIDHZ = hz;
+  }
+
   // Returns the current jitter-free Hz estimate, based on the history of provided data (jittered VSYNC timestamps)
-  //   To obtain estimate for a refresh cycle duration, use (1.0/getCurrentFrequency())
+  //   To obtain estimate for a refresh cycle duration, use (1000.0/getCurrentFrequency())
   getCurrentFrequency()
   {
     return this.__calc();
   };
 
   // Returns accurately de-jittered timestamp of VSYNC.  
-  //   You can add one refresh interval (1.0/getCurrentFrequency()) to get predicted timestamp of next refresh cycle.
+  //   You can add one refresh interval (1000.0/getCurrentFrequency()) to get predicted timestamp of next refresh cycle.
   //   NOTE: Returns 0 if you haven't been calling countCycle() since class creation or restartMeasuring.
   getFilteredCycleTimestamp()
   {
@@ -120,6 +134,20 @@ class RefreshRateCalculator
   {
     return this._cycleCount;
   };  
+
+  // *** FOR ADVANCED USERS ONLY 
+  // *** FOR BEAM RACING / LATENCY REDUCTION PURPOSES
+  // Returns estimated percentage that a display scanout has been completed, as a time offset between refresh cycles
+  //   Returned value is between 0.0 and 1.0 as a floating point offset between filtered refresh cycle timestamps.
+  //   This can be converted by the caller to an estimated raster scan line number for cross-platform beam racing 
+  //   applications (ala Tearline Jedi https://www.pouet.net/topic.php?which=11422&page=1 ...)
+  getRasterScanoutPercentage()
+  {
+    var elapsed = performance.now() - this.getFilteredCycleTimestamp();
+    var interval = 1000.0 / this.getCurrentFrequency();
+    while (elapsed < 0) elapsed += interval;
+    return (elapsed % interval) / interval;
+  }
 
   //---------------------------------------------------------------------------------------------------------------------------
   // BELOW IS INTERNAL ONLY.  DO NOT CALL BELOW METHODS DIRECTLY.  USE THE ABOVE METHODS INSTEAD.
@@ -166,18 +194,18 @@ class RefreshRateCalculator
     this._L3 = this._L4;
     this._L4 = tFrame;
     var grouping = Math.max(this._L4 - this._L3, this._L3 - this._L2, this._L2 - this._L1, this._L1 - this._L0) - Math.min(this._L4 - this._L3, this._L3 - this._L2, this._L2 - this._L1, this._L1 - this._L0);
-    if (grouping < this._TIGHTGROUPMS)
+    if (grouping < this.TIGHTGROUPMS)
     { // when several successive inter-frame times are very close to each other, assume a good frame time
-      if (--this._nJavaScriptSkip < 0 && --this._nSkip < 0)
+      if (--this._javaScriptSkip < 0 && --this._nSkip < 0)
       {    // skip first so many (allow browser to settle down)
         var avems = (this._L4 - this._L0) / 4;
-        if (avems < (1000 / this._LOWESTVALIDHZ))
+        if (avems < (1000 / this.LOWESTVALIDHZ))
         {                      // ignore 'inactive' tab timings
 
           // A change in Hz will be detected by excessive drift in validate code.  But the drift code will
           // not detect a Hz change that is an *exact* multiple of the prior Hz (like: 59.802 -> 119.604).
           // So that is why we expressly check for a Hz change.
-          var bHzChanged = (this._m_nms > 10) && (Math.abs(avems - this._m_summs / this._m_nms) > this._MSCHANGE);
+          var bHzChanged = (this._m_nms > 10) && (Math.abs(avems - this._m_summs / this._m_nms) > this.MSCHANGE);
           this._m_nChange = bHzChanged ? this._m_nChange + 1 : 0;
           if (!bHzChanged)
           {
@@ -196,7 +224,7 @@ class RefreshRateCalculator
           }
           else
           {
-            if (this._m_D.length >= this._MAXSTORE)
+            if (this._m_D.length >= this.MAXSTORE)
             {
               this._m_D = this.__cut(this._m_D);
               this._m_S = this.__cut(this._m_S);
@@ -208,7 +236,7 @@ class RefreshRateCalculator
             this._nSkip = this._nSkipBase;
 
             // update ms/Hz estimate and perform validation every so often
-            if (this._m_ms && (tFrame - this._tUpdate > this._VALIDATEMS))
+            if (this._m_ms && (tFrame - this._tUpdate > this.VALIDATEMS))
             {
               this._tUpdate = tFrame;
               this._m_vi = this.__validate();
