@@ -6,10 +6,6 @@
 * **Output:** Accurate filtered and dejittered floating-point Hz estimate & refresh cycle timestamps.
 * **Algorithm:** Combination of frame counting, jitter filtering, ignoring missed frames, and averaging.
 
-# EXAMPLE 
-
-![image](https://github.com/blurbusters/RefreshRateCalculator/assets/59981975/99235dfb-0b93-4352-8732-f2b6edc2db93)
-
 # LICENSE - Apache-2.0
 
 ```
@@ -96,3 +92,9 @@ var accurateRefreshCycleTimestamp = hertz.getFilteredCycleTimestamp();
 
   // See code for more good helper functions
 ```
+
+# EXAMPLES
+
+![image](https://github.com/blurbusters/RefreshRateCalculator/assets/59981975/99235dfb-0b93-4352-8732-f2b6edc2db93)
+
+![image](https://github.com/blurbusters/RefreshRateCalculator/assets/59981975/c2f1b4d7-623c-4ce0-8762-beab69e3d981)
