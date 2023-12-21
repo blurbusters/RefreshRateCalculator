@@ -62,7 +62,7 @@ limitations under the License.
 
 ## OTHER ADVANCED NICHE USES / LESS COMMON
 
-* While not normally used for beam racing, this algorithm is sufficiently accurate enough for cross-platform raster estimates for beam racing applications, based on a time offset between refresh cycle timestamps! (~1% error vs vertical resolution is possible on modern AMD/NVIDIA GPUs).
+* While not normally used for beam racing, this algorithm is sufficiently accurate enough for cross-platform raster estimates for beam racing applications, based on a time offset between refresh cycle timestamps! (~1% error vs vertical resolution is possible on modern AMD/NVIDIA GPUs).  Tearline Jedi (cross platform rasters for retro raster interrupt folks) uses a [similar algorithm](https://www.pouet.net/topic.php?which=11422&page=1) to this for sub-1ms latency between frame Present()-to-photons.
 * Can be used for tearingless VSYNC OFF algorithms (scanline-specific tearline steering offscreen ala RTSS Scanline Sync or SpecialK Latent Sync) as long as separate thread is able to monitor and provide your (jittery) VSYNC or refresh cycle timestamps.  Or if your platform/framework supports simultaneous VSYNC ON (offscreen) and VSYNC OFF (visible) in separate threads/contexts.
 * This is also a way to measure a GPU clock source indirectly, since the GPU generates the refresh rate during fixed Hz.
 HOWEVER, VRRR NOTE: This algorithm does not generate a GPU clock source when running this on a variable refresh rate display 
