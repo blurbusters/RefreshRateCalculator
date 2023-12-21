@@ -36,16 +36,11 @@ limitations under the License.
 * [requestAnimationFrame()](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) generally tries to syncs to VSYNC, so that is the source of VSYNC in web browsers, for deriving refresh cycle timestamps from.  The longer this algorithm runs, the more accurate the refresh rate estimate becomes.
 * **JavaScript Compatibility**: ES6 / ECMAScript 2015 (Chrome, FireFox, Edge, Safari, Opera)
 
-## CODE PORTING 
+## COMMON USE
 
-* This algorithm is very portable to most languages, on most platforms, via high level and low level graphics frameworks.
-* Generic VSYNC timestamps is usually immediately after exit of almost any frame presentation API during VSYNC ON framerate=Hz
-* APIs for timestamps include RTDSC / QueryPerformanceCounter() / std\:\:chrono\:\:high_resolution_clock\:\:now()
-* APIs for low level frame presentation include DirectX Present(), OpenGL glFinish(), Vulkan vkQueuePresentKHR()
-* APIs for high level frame presentation include XBox/MonoGame Draw(), Unity3D Update(), etc.
-* APIs for zero-graphics timestamps (e.g. independent/separate thread) include Windows D3DKMTWaitForVerticalBlankEvent()
-* Great for dejittering USB-relayed or TCP-relayed VSYNC heartbeats (e.g. software based genlock, shutter glasses emitters, etc)
- 
+* Generate ultra-accurate refresh rate estimate from a stream of jittery/skipped refresh cycle timestamps
+* Generate ultra-accurate timestamp estimate of next refresh cycle
+
 ## KNOWN PLATFORM SPECIFIC LIMITATIONS
 
 * In web browsers, only accurately when run on the primary monitor
@@ -54,11 +49,6 @@ limitations under the License.
 * Measuring refresh rate on Macs/iPads via Safari browser is accurate only up to 120Hz (if you disable "Prefer Page Rendering Updates near 60fps" setting)
 * Measuring refresh rate on iPhones via Safari browser is accurate only to 60Hz
 * If using Windows laptop at >120Hz, you may need to enable Performance GPU (AMD/NVIDIA/Intel-ARC) rather than the Integrated GPU where possible.  Intel Iris integrated GPU will usually generate accurate refresh rate up to about ~500Hz if you're not doing animations at the same time.  However, your mileage on older integrated GPUs may vary.
-
-## COMMON USE
-
-* Generate ultra-accurate refresh rate estimate from a stream of jittery/skipped refresh cycle timestamps
-* Generate ultra-accurate timestamp estimate of next refresh cycle
 
 ## OTHER ADVANCED NICHE USES / LESS COMMON
 
@@ -71,7 +61,16 @@ windowed-VRR-enabled operation, such as desktop compositor (e.g. DWM). This can 
 to match the frame rate of the desktop compositor or foreground application (e.g. 60fps capped app on VRR display).
 This algorithm currently degrades severely during varying-framerate operation on a VRR display.
 
+## CODE PORTING 
 
+* This algorithm is very portable to most languages, on most platforms, via high level and low level graphics frameworks.
+* Generic VSYNC timestamps is usually immediately after exit of almost any frame presentation API during VSYNC ON framerate=Hz
+* APIs for timestamps include RTDSC / QueryPerformanceCounter() / std\:\:chrono\:\:high_resolution_clock\:\:now()
+* APIs for low level frame presentation include DirectX Present(), OpenGL glFinish(), Vulkan vkQueuePresentKHR()
+* APIs for high level frame presentation include XBox/MonoGame Draw(), Unity3D Update(), etc.
+* APIs for zero-graphics timestamps (e.g. independent/separate thread) include Windows D3DKMTWaitForVerticalBlankEvent()
+* Great for dejittering USB-relayed or TCP-relayed VSYNC heartbeats (e.g. software based genlock, shutter glasses emitters, etc)
+ 
 ## SIMPLE CODE EXAMPLE
 
 ```
