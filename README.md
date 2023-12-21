@@ -6,6 +6,10 @@
 * **Output:** Accurate filtered and dejittered floating-point Hz estimate & refresh cycle timestamps.
 * **Algorithm:** Combination of frame counting, jitter filtering, ignoring missed frames, and averaging.
 
+# EXAMPLE 
+
+![image](https://github.com/blurbusters/RefreshRateCalculator/assets/59981975/99235dfb-0b93-4352-8732-f2b6edc2db93)
+
 # LICENSE - Apache-2.0
 
 ```
