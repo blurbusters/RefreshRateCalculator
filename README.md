@@ -6,13 +6,6 @@
 * **Output:** Accurate filtered and dejittered floating-point Hz estimate & refresh cycle timestamps.
 * **Algorithm:** Combination of frame counting, jitter filtering, ignoring missed frames, and averaging.
 
-1. This is also a way to measure a GPU clock source indirectly, since the GPU generates the refresh rate during fixed Hz.
-2. IMPORTANT VRR NOTE: This algorithm does not generate a GPU clock source when running this on a variable refresh rate display 
-(e.g. GSYNC/FreeSync), but can still measure the foreground software application's fixed-framerate operation during
-windowed-VRR-enabled operation, such as desktop compositor (e.g. DWM). This can allow a background application 
-to match the frame rate of the desktop compositor or foreground application (e.g. 60fps capped app on VRR display).
-This algorithm currently degrades severely during varying-framerate operation on a VRR display.
-
 # LICENSE - Apache-2.0
 
 ```
@@ -69,6 +62,13 @@ limitations under the License.
 
 * While not normally used for beam racing, this algorithm is sufficiently accurate enough for cross-platform raster estimates for beam racing applications, based on a time offset between refresh cycle timestamps! (~1% error vs vertical resolution is possible on modern AMD/NVIDIA GPUs).
 * Can be used for tearingless VSYNC OFF algorithms (scanline-specific tearline steering offscreen ala RTSS Scanline Sync or SpecialK Latent Sync) as long as separate thread is able to monitor and provide your (jittery) VSYNC or refresh cycle timestamps.  Or if your platform/framework supports simultaneous VSYNC ON (offscreen) and VSYNC OFF (visible) in separate threads/contexts.
+* This is also a way to measure a GPU clock source indirectly, since the GPU generates the refresh rate during fixed Hz.
+HOWEVER, VRRR NOTE: This algorithm does not generate a GPU clock source when running this on a variable refresh rate display 
+(e.g. GSYNC/FreeSync), but can still measure the foreground software application's fixed-framerate operation during
+windowed-VRR-enabled operation, such as desktop compositor (e.g. DWM). This can allow a background application 
+to match the frame rate of the desktop compositor or foreground application (e.g. 60fps capped app on VRR display).
+This algorithm currently degrades severely during varying-framerate operation on a VRR display.
+
 
 ## SIMPLE CODE EXAMPLE
 
