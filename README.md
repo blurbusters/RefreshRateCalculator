@@ -93,7 +93,7 @@ var accurateRefreshCycleTimestamp = hertz.getFilteredCycleTimestamp();
   // See code for more good helper functions
 ```
 
-# EXAMPLES
+# RUNNING FIELD EXAMPLES
 
 [![image](https://github.com/blurbusters/RefreshRateCalculator/assets/59981975/99235dfb-0b93-4352-8732-f2b6edc2db93)](https://www.testufo.com/refreshrate)
 
