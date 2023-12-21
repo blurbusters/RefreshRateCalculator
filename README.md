@@ -52,10 +52,10 @@ limitations under the License.
 * APIs for high level frame presentation include XBox/MonoGame Draw(), Unity3D Update(), etc.
 * APIs for zero-graphics timestamps (e.g. independent/separate thread) include Windows D3DKMTWaitForVerticalBlankEvent()
 * Great for dejittering USB-relayed or TCP-relayed VSYNC heartbeats (e.g. software based genlock, shutter glasses emitters, etc)
-* Measuring refresh rate on Windows is accurate to 1000Hz (prototype monitors have been tested by Blur Busters).
-* Measuring refresh rate on Androids is accurate to 240Hz
-* Measuring refresh rate on Macs/iPads inside Safari browser is accurate only up to 120Hz (if you disable "Prefer Page Rendering Updates near 60fps" setting)
-* Measuring refresh rate on iPhones inside Safari browser is accurate only to 60Hz
+* Measuring refresh rate on Windows via Chrome/FireFox/Edge is accurate to 1000Hz (prototype monitors have been tested by Blur Busters).
+* Measuring refresh rate on Androids via Chrome is accurate to 240Hz
+* Measuring refresh rate on Macs/iPads via Safari browser is accurate only up to 120Hz (if you disable "Prefer Page Rendering Updates near 60fps" setting)
+* Measuring refresh rate on iPhones via Safari browser is accurate only to 60Hz
 * While not normally used for beam racing, this algorithm is sufficiently accurate enough for cross-platform raster estimates for beam racing applications, based on a time offset between refresh cycle timestamps! (~1% error vs vertical resolution is possible on modern AMD/NVIDIA GPUs).
 * Can be used for tearingless VSYNC OFF algorithms (scanline-specific tearline steering offscreen ala RTSS Scanline Sync or SpecialK Latent Sync) as long as separate thread is able to monitor and provide your (jittery) VSYNC or refresh cycle timestamps.  Or if your platform/framework supports simultaneous VSYNC ON (offscreen) and VSYNC OFF (visible) in separate threads/contexts.
 
