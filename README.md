@@ -73,6 +73,8 @@ This algorithm currently degrades severely during varying-framerate operation on
  
 ## SIMPLE CODE EXAMPLE
 
+(Our original engine was already CamelCase, apologies)
+
 ```
 var hertz = new RefreshRateCalculator();
 
