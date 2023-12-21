@@ -48,6 +48,7 @@ limitations under the License.
  
 ## KNOWN PLATFORM SPECIFIC LIMITATIONS
 
+* In web browsers, only accurately when run on the primary monitor
 * Measuring refresh rate on Windows via Chrome/FireFox/Edge is accurate to 1000Hz (prototype monitors have been tested by Blur Busters).
 * Measuring refresh rate on Androids via Chrome is accurate to 240Hz (higher untested)
 * Measuring refresh rate on Macs/iPads via Safari browser is accurate only up to 120Hz (if you disable "Prefer Page Rendering Updates near 60fps" setting)
