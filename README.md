@@ -62,7 +62,8 @@ limitations under the License.
 
 ## COMMON USE
 
-* Generate accurate refresh rate estimate from a stream of jittery/skipped refresh cycle timestamps 
+* Generate ultra-accurate refresh rate estimate from a stream of jittery/skipped refresh cycle timestamps
+* Generate ultra-accurate timestamp estimate of next refresh cycle
 
 ## OTHER ADVANCED NICHE USES / LESS COMMON
 
