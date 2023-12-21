@@ -53,7 +53,7 @@ limitations under the License.
 * Measuring refresh rate on Androids via Chrome is accurate to 240Hz (higher untested)
 * Measuring refresh rate on Macs/iPads via Safari browser is accurate only up to 120Hz (if you disable "Prefer Page Rendering Updates near 60fps" setting)
 * Measuring refresh rate on iPhones via Safari browser is accurate only to 60Hz
-* If using Windows laptop at >120Hz, enable Performance GPU (AMD/NVIDIA) rather than the Integrated GPU where possible.
+* If using Windows laptop at >120Hz, enable Performance GPU (AMD/NVIDIA/Intel-ARC) rather than the Integrated GPU where possible.
 
 ## COMMON USE
 
