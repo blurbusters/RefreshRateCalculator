@@ -101,3 +101,7 @@ var accurateRefreshCycleTimestamp = hertz.getFilteredCycleTimestamp();
 [![image](https://github.com/blurbusters/RefreshRateCalculator/assets/59981975/99235dfb-0b93-4352-8732-f2b6edc2db93)](https://www.testufo.com/refreshrate)
 
 [![image](https://github.com/blurbusters/RefreshRateCalculator/assets/59981975/c2f1b4d7-623c-4ce0-8762-beab69e3d981)](https://www.vsynctester.com)
+
+# IMPORTANT COPYRIGHT NOTE
+
+The copyrighted names "Blur Busters", "Test UFO" and the UFO graphics logo are trademarks of Blur Busters. Not to be use in forked implementations; but credit to Blur Busters must remain in your implementations (MIT/Apache/GPL/internal/etc).
