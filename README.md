@@ -40,14 +40,16 @@ limitations under the License.
 
 * Generate ultra-accurate refresh rate estimate from a stream of jittery/skipped refresh cycle timestamps
 * Generate ultra-accurate timestamp estimate of next refresh cycle
+* Useful for estimating the display refresh rate;
+* Useful for advanced latency reductions via delayed input reads during desynchronized rendering;
+* Useful for beam racing operations;
 
 ## KNOWN PLATFORM SPECIFIC LIMITATIONS
 
 * In web browsers, only accurately when run on the primary monitor
 * Measuring refresh rate on Windows via Chrome/FireFox/Edge is accurate to 1000Hz (prototype monitors have been tested by Blur Busters).
 * Measuring refresh rate on Androids via Chrome is accurate to 240Hz (higher untested)
-* Measuring refresh rate on Macs/iPads via Safari browser is accurate only up to 120Hz (if you disable "Prefer Page Rendering Updates near 60fps" setting)
-* Measuring refresh rate on iPhones via Safari browser is accurate only to 60Hz
+* Measuring refresh rate on Macs/iPads via Safari browser is accurate only if you disable "Prefer Page Rendering Updates near 60fps" setting
 * If using Windows laptop at >120Hz, you may need to enable Performance GPU (AMD/NVIDIA/Intel-ARC) rather than the Integrated GPU where possible.  Intel Iris integrated GPU will usually generate accurate refresh rate up to about ~500Hz if you're not doing animations at the same time.  However, your mileage on older integrated GPUs may vary.
 
 ## OTHER ADVANCED NICHE USES / LESS COMMON
